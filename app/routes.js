@@ -10,12 +10,36 @@ module.exports = function(app, passport, db, multer, ObjectId) {
     // PROFILE SECTION =========================
     app.get('/profile', isLoggedIn, function(req, res) {
         db.collection('messages').find().toArray((err, result) => {
+        // console.log('AAAAAAAAAAAA')
+        // db.collection('documents').find().toArray((err, result) => {
           if (err) return console.log(err)
           res.render('profile.ejs', {
             user : req.user,
             messages: result
           })
         })
+    });
+
+    // MENU SECTION =========================
+    app.get('/menu', isLoggedIn, function(req, res) {
+
+        // menu section, simpler to use this than an actual
+
+        // res.render('menu.ejs')
+
+        res.render('menu.ejs', {
+            user : req.user,
+        })
+
+        // db.collection('messages').find().toArray((err, result) => {
+        // // console.log('AAAAAAAAAAAA')
+        // // db.collection('documents').find().toArray((err, result) => {
+        //   if (err) return console.log(err)
+        //   res.render('menu.ejs', {
+        //     user : req.user,
+        //     messages: result
+        //   })
+        // })
     });
 
     // LOGOUT ==============================

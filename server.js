@@ -21,7 +21,7 @@ var configDB = require('./config/database.js');
 var db
 
 // configuration ===============================================================
-mongoose.connect(configDB.url, { useMongoClient: true }, (err, database) => {
+mongoose.connect(configDB.url, { useNewUrlParser: true }, (err, database) => {
   if (err) return console.log(err)
   db = database
   require('./app/routes.js')(app, passport, db, multer, ObjectId);
@@ -50,6 +50,11 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
+// disable caching for now, for faster development
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private')
+  next()
+})
 
 // routes ======================================================================
 //require('./app/routes.js')(app, passport, db); // load our routes and pass in our app and fully configured passport
