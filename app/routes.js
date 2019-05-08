@@ -15,7 +15,7 @@ module.exports = function(app, passport, db, multer, ObjectId) {
           if (err) return console.log(err)
           res.render('profile.ejs', {
             user : req.user,
-            messages: result
+            messages: `result`,
           })
         })
     });
@@ -26,7 +26,6 @@ module.exports = function(app, passport, db, multer, ObjectId) {
         // menu section, simpler to use this than an actual
 
         // res.render('menu.ejs')
-
         res.render('menu.ejs', {
             user : req.user,
         })
@@ -41,6 +40,67 @@ module.exports = function(app, passport, db, multer, ObjectId) {
         //   })
         // })
     });
+
+
+    // DEMO =========================
+    app.get('/demo', isLoggedIn, function(req, res) {
+        res.render('demo.ejs', {
+            user : req.user,
+        })
+    });
+
+    // USER =========================
+    app.get('/user', isLoggedIn, function(req, res) {
+        res.render('user.ejs', {
+            user : req.user,
+        })
+    });
+
+    // IMAGES =========================
+    app.get('/images', isLoggedIn, function(req, res) {
+        // res.render('images.ejs', {
+        //     user : req.user,
+        // })
+
+
+        db.collection('messages').find().toArray((err, result) => {
+        // console.log('AAAAAAAAAAAA')
+        // db.collection('documents').find().toArray((err, result) => {
+          if (err) return console.log(err)
+          res.render('images.ejs', {
+            user : req.user,
+            messages: result
+          })
+        })
+
+        // NEXT VERSION
+        // db.collection('images').find().toArray((err, result) => {
+        // // console.log('AAAAAAAAAAAA')
+        // // db.collection('documents').find().toArray((err, result) => {
+        //   if (err) return console.log(err)
+        //   res.render('images.ejs', {
+        //     user : req.user,
+        //     messages: result
+        //   })
+        // })
+
+
+    });
+
+    // CHAT =========================
+    app.get('/chat', isLoggedIn, function(req, res) {
+        db.collection('messages').find().toArray((err, result) => {
+        // console.log('AAAAAAAAAAAA')
+        // db.collection('documents').find().toArray((err, result) => {
+          if (err) return console.log(err)
+          res.render('chat.ejs', {
+            user : req.user,
+            messages: result
+          })
+        })
+    });
+
+
 
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {

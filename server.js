@@ -51,6 +51,7 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 // disable caching for now, for faster development
+// okay so this isnt actuall doing it apparently :/
 app.use((req, res, next) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private')
   next()
