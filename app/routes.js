@@ -42,6 +42,32 @@ module.exports = function(app, passport, db, multer, ObjectId) {
         // })
     });
 
+    // SCRATCHING POST =========================
+    app.get('/scratching-post', isLoggedIn, function(req, res) {
+
+
+        db.collection('images').find().toArray((err, result) => {
+          if (err) return console.log(err)
+          res.render('scratching-post.ejs', {
+            user : req.user,
+            messages: result
+          })
+        })
+        // db.collection('messages').find().toArray((err, result) => {
+        // // console.log('AAAAAAAAAAAA')
+        // // db.collection('documents').find().toArray((err, result) => {
+        //   if (err) return console.log(err)
+        //   res.render('scratching-post.ejs', {
+        //     user : req.user,
+        //     messages: result
+        //   })
+        // })
+
+        // res.render('scratching-post.ejs', {
+        //     user : req.user,
+        // })
+    });
+
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
         req.logout();
@@ -83,6 +109,7 @@ app.get('/test', isLoggedIn, function(req, res) {
         res.send('Message deleted!')
       })
     })
+
 //---------------------------------------
 // IMAGE CODE
 //---------------------------------------
@@ -125,6 +152,43 @@ var insertDocuments = function(db, req, filePath, callback) {
     //     callback(result);
     // });
 }
+
+
+// image board routes ========================================================
+
+app.post('/images', upload.single('file-to-upload'), (req, res, next) => {
+  let img_name = req.body.img
+  let local_filename = img_name
+  console.log(123, req.file.filename)
+
+  db.collection('images').save({name: req.body.name, msg: req.body.msg, path: 'images/uploads/' + req.file.filename, thumbUp: 0, thumbDown:0}, (err, result) => {
+    if (err) return console.log(err)
+    console.log('saved image to database')
+    res.redirect('/scratching-post')
+  })
+})
+
+    app.put('/images', (req, res) => {
+      db.collection('images')
+      .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+        $set: {
+          thumbUp:req.body.thumbUp + 1
+        }
+      }, {
+        sort: {_id: -1},
+        upsert: true
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+    })
+
+    app.delete('/images', (req, res) => {
+      db.collection('images').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
+        if (err) return res.send(500, err)
+        res.send('Message deleted!')
+      })
+    })
 //---------------------------------------
 // IMAGE CODE END
 //---------------------------------------
