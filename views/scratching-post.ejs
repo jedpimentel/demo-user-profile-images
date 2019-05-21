@@ -26,6 +26,12 @@
           <ul class="messages">
           <% for(var i=0; i<messages.length; i++) {%>
             <li class="message">
+              
+              <!-- how to link to individual image viewer? -->
+              <a href="/images %>">LINK</a>
+              <a href="/image/<%= messages[i].path %>">LINK</a>
+              <a href="/image/<%= messages[i].path %>">LINK</a>
+
               <span><%= messages[i].name %></span>
               <span><%= messages[i].name %></span>
               <span><%= messages[i].img %></span>

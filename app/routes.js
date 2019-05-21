@@ -168,27 +168,27 @@ app.post('/images', upload.single('file-to-upload'), (req, res, next) => {
   })
 })
 
-    app.put('/images', (req, res) => {
-      db.collection('images')
-      .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-        $set: {
-          thumbUp:req.body.thumbUp + 1
-        }
-      }, {
-        sort: {_id: -1},
-        upsert: true
-      }, (err, result) => {
-        if (err) return res.send(err)
-        res.send(result)
-      })
-    })
+app.put('/images', (req, res) => {
+  db.collection('images')
+  .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+    $set: {
+      thumbUp:req.body.thumbUp + 1
+    }
+  }, {
+    sort: {_id: -1},
+    upsert: true
+  }, (err, result) => {
+    if (err) return res.send(err)
+    res.send(result)
+  })
+})
 
-    app.delete('/images', (req, res) => {
-      db.collection('images').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
-        if (err) return res.send(500, err)
-        res.send('Message deleted!')
-      })
-    })
+app.delete('/images', (req, res) => {
+  db.collection('images').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
+    if (err) return res.send(500, err)
+    res.send('Message deleted!')
+  })
+})
 //---------------------------------------
 // IMAGE CODE END
 //---------------------------------------
