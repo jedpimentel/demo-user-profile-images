@@ -22,15 +22,13 @@
         <!-- IMAGES THING -->
         <!-- TODO: rename references to "messages" as "images" -->
         <div class="col-sm-6">
-          <h3>Images</h3>
+          <h3>Images</h3>s
           <ul class="messages">
           <% for(var i=0; i<messages.length; i++) {%>
             <li class="message">
               
               <!-- how to link to individual image viewer? -->
-              <a href="/images %>">LINK</a>
-              <a href="/image/<%= messages[i].path %>">LINK</a>
-              <a href="/image/<%= messages[i].path %>">LINK</a>
+              <a href="/image-viewer/<%= messages[i]._id %>">LINK</a>
 
               <span><%= messages[i].name %></span>
               <span><%= messages[i].name %></span>

@@ -25,7 +25,7 @@ module.exports = function(app, passport, db, multer, ObjectId) {
 
         // menu section, simpler to use this than an actual
 
-        // res.render('menu.ejs')
+        // res.returnder('menu.ejs')
 
         res.render('menu.ejs', {
             user : req.user,
@@ -42,15 +42,44 @@ module.exports = function(app, passport, db, multer, ObjectId) {
         // })
     });
 
-    // SCRATCHING POST =========================
+    // SCRATCHING POST - homework image thing =========================
     app.get('/scratching-post', isLoggedIn, function(req, res) {
-
-
         db.collection('images').find().toArray((err, result) => {
           if (err) return console.log(err)
           res.render('scratching-post.ejs', {
             user : req.user,
             messages: result
+          })
+        })
+        // db.collection('messages').find().toArray((err, result) => {
+        // // console.log('AAAAAAAAAAAA')
+        // // db.collection('documents').find().toArray((err, result) => {
+        //   if (err) return console.log(err)
+        //   res.render('scratching-post.ejs', {
+        //     user : req.user,
+        //     messages: result
+        //   })
+        // })
+
+        // res.render('scratching-post.ejs', {
+        //     user : req.user,
+        // })
+    });
+    // image viewer - homework image thing =========================
+    app.get('/image-viewer/:imgId', isLoggedIn, function(req, res) {
+        // db.collection('images').find(imgId).toArray((err, result) => {
+        console.log('req.params', req.params)
+        db.collection('images').findOne({_id: ObjectId(req.params.imgId)}, (err, result) => {
+
+          if (err) return console.log(err);
+
+          console.log('imgId', req.params.imgId)
+          console.log('err', err)
+          console.log('result', result)
+
+          res.render('image-viewer.ejs', {
+            user : req.user,
+            image: result
           })
         })
         // db.collection('messages').find().toArray((err, result) => {

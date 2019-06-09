@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+    <title>21 Savage Fan Site</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+
+    <div class="page-header text-center">
+        <h1><span class="fa fa-anchor"></span> Menu Page</h1>
+        <a href="/menu" class="btn btn-default btn-sm">Menu</a>
+        <a href="/profile" class="btn btn-default btn-sm">Profile</a>
+        <a href="/scratching-post" class="btn btn-default btn-sm" style="background-color:gray;">Scratching Post</a>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+
+    <div class="row">
+
+        <!-- IMAGES THING -->
+        <!-- TODO: rename references to "messages" as "images" -->
+        <div class="col-sm-6">
+          <h2>Image</h2>
+          <span><%= JSON.stringify(image) %></span>
+
+          <ul>
+            <li>ID: <%= image._id %></li>
+            <li>Name: <%= image.name %></li>
+            <li><img src="/<%= image.path %>" style="max-height: 300px"></li>
+            <li>Msg: <%= image.msg %></li>
+            <li>thumbUp: <%= image.thumbUp %> <a href="">(thumbUp)</a></li>
+            <li>thumbDown: <%= image.thumbDown %> <a href="">(thumbUp)</a></li>
+          </ul>
+
+            <h2>Add an image</h2>
+            <% if (user.local.email) { %>
+              <form action="/images" enctype="multipart/form-data" method="POST">
+                <input type="text" value="<%= user.local.email %>" name="name">
+
+                <!-- <input type="file" name="file-to-upload"> -->
+                <input type="file" name="file-to-upload">
+
+                <input type="text" placeholder="message" name="msg">
+                <button type="submit">Submit</button>
+              </form>
+            <% } %>
+        </div>
+
+</div>
+
+<script src="main.js"></script>
+
+</body>
+</html>
