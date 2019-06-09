@@ -22,19 +22,14 @@
         <!-- IMAGES THING -->
         <!-- TODO: rename references to "messages" as "images" -->
         <div class="col-sm-6">
-          <h3>Images</h3>s
+          <h2>Images</h2>
           <ul class="messages">
           <% for(var i=0; i<messages.length; i++) {%>
             <li class="message">
-              
-              <!-- how to link to individual image viewer? -->
-              <a href="/image-viewer/<%= messages[i]._id %>">LINK</a>
-
-              <span><%= messages[i].name %></span>
-              <span><%= messages[i].name %></span>
+              <h3><%= messages[i].name %><a href="/image-viewer/<%= messages[i]._id %>"> [link]</a></h3>
               <span><%= messages[i].img %></span>
               <img src="<%= messages[i].path %>" alt=""/> 
-              <span><%= messages[i].msg %></span>
+              <p><%= messages[i].msg %></p>
               <span><%= messages[i].thumbUp %></span>
               <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
               <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
@@ -43,18 +38,18 @@
           <% } %>
           </ul>
 
-            <h2>Add an image</h2>
-            <% if (user.local.email) { %>
-              <form action="/images" enctype="multipart/form-data" method="POST">
-                <input type="text" value="<%= user.local.email %>" name="name">
+          <h2>Add an image</h2>
+          <% if (user.local.email) { %>
+            <form action="/images" enctype="multipart/form-data" method="POST">
+              <input type="text" value="<%= user.local.email %>" name="name">
 
-                <!-- <input type="file" name="file-to-upload"> -->
-                <input type="file" name="file-to-upload">
+              <!-- <input type="file" name="file-to-upload"> -->
+              <input type="file" name="file-to-upload">
 
-                <input type="text" placeholder="message" name="msg">
-                <button type="submit">Submit</button>
-              </form>
-            <% } %>
+              <input type="text" placeholder="message" name="msg">
+              <button type="submit">Submit</button>
+            </form>
+          <% } %>
         </div>
 
 
